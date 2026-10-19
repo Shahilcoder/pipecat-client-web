@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Claude-inspired dark palette. The app is dark-only, so the tokens live on :root. */
+:root {
+  --radius: 0.75rem;
+
+  --background: #262624;
+  --foreground: #faf9f5;
+  --surface: #30302e;
+  --surface-foreground: #faf9f5;
+  --user-bubble: #141413;
+  --muted: #3a3a37;
+  --muted-foreground: #a6a39a;
+  --primary: #d97757;
+  --primary-foreground: #ffffff;
+  --secondary: #3a3a37;
+  --secondary-foreground: #faf9f5;
+  --accent: #3a3a37;
+  --accent-foreground: #faf9f5;
+  --destructive: #e5534b;
+  --success: #6cc08b;
+  --border: rgb(222 220 209 / 0.15);
+  --input: rgb(222 220 209 / 0.15);
+  --ring: #d97757;
+  --popover: #30302e;
+  --popover-foreground: #faf9f5;
+  --card: #30302e;
+  --card-foreground: #faf9f5;
+}
+
+@theme inline {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Source Serif 4 Variable", ui-serif, Georgia, serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-user-bubble: var(--user-bubble);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --animate-spark: spark 2.4s ease-in-out infinite;
+
+  @keyframes spark {
+    0%,
+    100% {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(45deg) scale(0.85);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+}
