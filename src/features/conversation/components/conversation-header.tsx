@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 import type { CallStatus } from "../types"
+import { SproutFace } from "./sprout-face"
 
 interface ConversationHeaderProps {
   callStatus: CallStatus
@@ -22,7 +23,7 @@ const STATUS_LABELS: Record<CallStatus, string> = {
 const STATUS_DOT_CLASSES: Record<CallStatus, string> = {
   idle: "bg-muted-foreground/60",
   connecting: "bg-primary animate-pulse",
-  ready: "bg-success",
+  ready: "bg-sunny ring-1 ring-primary/60 animate-pulse",
   ending: "bg-muted-foreground animate-pulse",
   error: "bg-destructive",
 }
@@ -48,7 +49,10 @@ export function ConversationHeader({
         </Button>
 
         <div className="flex flex-col items-center leading-tight">
-          <h1 className="text-[15px] font-medium">Voice Agent</h1>
+          <h1 className="flex items-center gap-1.5 font-display text-lg font-semibold">
+            <SproutFace className="size-6" />
+            Sprout
+          </h1>
           <p className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-live="polite">
             <span className={cn("size-1.5 rounded-full", STATUS_DOT_CLASSES[callStatus])} />
             {STATUS_LABELS[callStatus]}

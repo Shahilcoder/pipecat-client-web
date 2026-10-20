@@ -39,6 +39,14 @@ describe("useChatMessages", () => {
     ])
   })
 
+  it("asks for spoken bot text only, so the transcript follows the TTS", () => {
+    mockConversation(messages)
+
+    renderHook(() => useChatMessages())
+
+    expect(usePipecatConversation).toHaveBeenCalledWith({ botOutputFilter: { unspoken: false } })
+  })
+
   it("keeps the same array while the transcript is unchanged", () => {
     mockConversation(messages)
 

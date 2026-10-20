@@ -54,7 +54,7 @@ describe("ConversationScreen", () => {
     await userEvent.setup().click(screen.getByRole("button", { name: "New conversation" }))
 
     expect(screen.queryByText("Hi there")).not.toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "How can I help you today?" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Hi, I'm Sprout. What's on your mind?" })).toBeInTheDocument()
   })
 
   it("shows the session error as an alert", () => {

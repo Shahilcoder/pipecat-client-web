@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 
 import type { BotActivity, ChatMessage } from "../types"
 import { MessageItem } from "./message-item"
-import { SparkMark } from "./spark-mark"
+import { SproutFace } from "./sprout-face"
 
 interface MessageListProps {
   messages: ChatMessage[]
@@ -29,7 +29,10 @@ export function MessageList({ messages, botActivity }: MessageListProps) {
         {messages.map((message) => (
           <MessageItem key={message.id} message={message} />
         ))}
-        <SparkMark isAnimated={isBotBusy} className={isBotBusy ? "opacity-100" : "opacity-60"} />
+        <SproutFace
+          activity={botActivity}
+          className={isBotBusy ? "opacity-100" : "opacity-70"}
+        />
         <div ref={listEndRef} />
       </div>
     </div>
