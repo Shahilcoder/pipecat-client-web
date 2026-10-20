@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react"
 import {
+  useConversationContext,
   usePipecatClient,
   usePipecatClientMicControl,
   usePipecatClientTransportState,
@@ -31,6 +32,7 @@ export function useVoiceSession(): VoiceSession {
 
   const transportState = usePipecatClientTransportState()
   const { isMicEnabled, enableMic } = usePipecatClientMicControl()
+  const { injectMessage } = useConversationContext()
   const [isStartingCall, setIsStartingCall] = useState(false)
   const [startErrorMessage, setStartErrorMessage] = useState<string>()
 
@@ -62,9 +64,13 @@ export function useVoiceSession(): VoiceSession {
 
   const toggleMic = useCallback(() => enableMic(!isMicEnabled), [enableMic, isMicEnabled])
 
+  // Pipecat only records user messages from speech-to-text, so typed text is added to the transcript here.
   const sendText = useCallback(
-    (text: string) => client.sendText(text, { audio_response: true }),
-    [client]
+    async (text: string) => {
+      await client.sendText(text, { audio_response: true })
+      injectMessage({ role: "user", parts: [{ text, final: true, createdAt: new Date().toISOString() }] })
+    },
+    [client, injectMessage]
   )
 
   return { callStatus, isMicEnabled, errorMessage, startCall, endCall, toggleMic, sendText }

@@ -1,5 +1,6 @@
 import type { PipecatClient } from "@pipecat-ai/client-js"
 import {
+  useConversationContext,
   usePipecatClient,
   usePipecatClientMicControl,
   usePipecatClientTransportState,
@@ -16,6 +17,7 @@ vi.mock("@pipecat-ai/client-react", async (importOriginal) => ({
   usePipecatClient: vi.fn(),
   usePipecatClientTransportState: vi.fn(),
   usePipecatClientMicControl: vi.fn(),
+  useConversationContext: vi.fn(),
 }))
 
 // Keep toConnectionParams and SessionApiError real; only the HTTP call is faked.
@@ -41,6 +43,7 @@ function createFakeClient() {
 
 let fakeClient: ReturnType<typeof createFakeClient>
 const enableMic = vi.fn()
+const injectMessage = vi.fn()
 
 beforeEach(() => {
   vi.clearAllMocks()
@@ -49,6 +52,7 @@ beforeEach(() => {
   vi.mocked(usePipecatClientTransportState).mockReturnValue("disconnected")
   vi.mocked(usePipecatClientMicControl).mockReturnValue({ isMicEnabled: true, enableMic })
   vi.mocked(createSession).mockResolvedValue(session)
+  vi.mocked(useConversationContext).mockReturnValue({ injectMessage, botOutputSupported: null })
 })
 
 async function startCall(result: { current: ReturnType<typeof useVoiceSession> }) {
@@ -167,6 +171,19 @@ describe("useVoiceSession", () => {
     await act(() => result.current.sendText("hello"))
 
     expect(fakeClient.sendText).toHaveBeenCalledWith("hello", { audio_response: true })
+    expect(injectMessage).toHaveBeenCalledWith({
+      role: "user",
+      parts: [expect.objectContaining({ text: "hello", final: true })],
+    })
+  })
+
+  it("does not add the message to the transcript when sending fails", async () => {
+    fakeClient.sendText.mockRejectedValue(new Error("offline"))
+    const { result } = renderHook(() => useVoiceSession())
+
+    await act(() => expect(result.current.sendText("hello")).rejects.toThrow("offline"))
+
+    expect(injectMessage).not.toHaveBeenCalled()
   })
 
   it("throws when used outside PipecatClientProvider", () => {
