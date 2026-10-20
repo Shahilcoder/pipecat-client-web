@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react"
 
+import { cn } from "@/lib/utils"
+
 import type { BotActivity, ChatMessage } from "../types"
 import { MessageItem } from "./message-item"
 import { SproutFace } from "./sprout-face"
@@ -31,7 +33,8 @@ export function MessageList({ messages, botActivity }: MessageListProps) {
         ))}
         <SproutFace
           activity={botActivity}
-          className={isBotBusy ? "opacity-100" : "opacity-70"}
+          // Pulls the face up out of the list's 24px message gap so it sits under the last reply.
+          className={cn("-mt-6", isBotBusy ? "opacity-100" : "opacity-70")}
         />
         <div ref={listEndRef} />
       </div>
