@@ -64,7 +64,7 @@ export function Composer({
     <div className="px-3 pt-2 pb-[max(env(safe-area-inset-bottom),0.75rem)]">
       <form
         onSubmit={handleSubmit}
-        className="mx-auto max-w-3xl rounded-2xl border bg-surface shadow-lg shadow-black/20 transition-colors focus-within:border-foreground/25"
+        className="mx-auto max-w-3xl rounded-[28px] border bg-surface shadow-lg shadow-primary/12 transition-colors focus-within:border-primary"
       >
         <label htmlFor="composer-input" className="sr-only">
           Message
@@ -95,7 +95,7 @@ export function Composer({
               size="icon"
               aria-label="Send message"
               title="Send message"
-              className="size-11 rounded-xl bg-primary text-primary-foreground hover:bg-primary/85"
+              className="size-11 rounded-full bg-primary text-primary-foreground hover:bg-primary/85"
             >
               <ArrowUpIcon className="size-5" />
             </Button>

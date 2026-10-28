@@ -1,6 +1,6 @@
 # Voice Agent Web Client — Implementation Guide
 
-A mobile-first React client for the `pipecat-voice-agent` backend. It uses a Claude-style dark UI,
+A mobile-first React client for the `pipecat-voice-agent` backend. It uses the Sprout UI (green light theme, see `DESIGN.md`),
 **Pipecat client SDK** + **LiveKit transport**, typed text over **RTVI**, and the **shadcn** + **Tailwind v4** UI kit.
 
 Verified against `@pipecat-ai/client-js` **1.13.1**, `@pipecat-ai/client-react` **1.8.2**,
@@ -46,7 +46,7 @@ session ourselves and map it with `toConnectionParams()`.
 | Area | Files | Who |
 |---|---|---|
 | Tooling | `vite.config.ts` (proxy + Vitest), `tsconfig*.json` (`@/` alias), `.oxlintrc.json`, `index.html`, `.env.example` | done |
-| Theme | `src/index.css` (Claude dark tokens, serif font, `animate-spark`) | done |
+| Theme | `src/index.css` (Sprout tokens from `DESIGN.md`, Fredoka + Figtree, `animate-word-pop`, blob face keyframes) | done |
 | shadcn UI | `src/components/ui/{button,textarea,sonner}.tsx` | done |
 | Feature UI | `src/features/conversation/components/*` (presentational: props in, callbacks out) | done |
 | Contracts | `types.ts`, `ConversationViewState` / `ConversationActions` | done |
@@ -1622,7 +1622,7 @@ location / {
 
 - **Anyone who can load the site can start sessions.** The proxy hides the key but doesn't authenticate users. Add user auth or rate limiting at the proxy before going public. The backend's capacity limit (503) is the only guard today.
 - **No history.** A transcript lasts until the next call or a page reload. Persist `ChatMessage[]` if you need it.
-- **Tool calls are hidden** (`function_call` messages are dropped in step 4). To show Claude-style tool chips, add a `role: "tool"` to `ChatMessage` and a `MessageItem` branch.
+- **Tool calls are hidden** (`function_call` messages are dropped in step 4). To show tool chips, add a `role: "tool"` to `ChatMessage` and a `MessageItem` branch.
 - **Old transcript flash.** After New conversation, starting a call shows the old transcript for a moment, until Pipecat's `Connected` event clears it. Keep the transcript hidden until the first new message arrives if that bothers you.
 - **`field-sizing: content`** auto-grows the composer natively. Browsers without it scroll inside `max-h-40` instead.
 - **Reconnects.** If the network drops, the call ends and the user taps Start call again. Revisit if this shows up in real usage.

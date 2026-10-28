@@ -27,9 +27,9 @@ export function ActivityIndicator({ botActivity }: ActivityIndicatorProps) {
                 key={delayMs}
                 style={{ animationDelay: `${delayMs}ms` }}
                 className={cn(
-                  "w-0.5 rounded-full bg-current",
+                  "w-1 rounded-full bg-primary/50",
                   botActivity === "speaking" && "h-4 animate-pulse bg-primary",
-                  botActivity === "thinking" && "h-2.5 animate-pulse",
+                  botActivity === "thinking" && "h-2.5 animate-pulse bg-primary/70",
                   botActivity === "listening" && "h-1.5"
                 )}
               />

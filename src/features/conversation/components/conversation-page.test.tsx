@@ -25,7 +25,7 @@ describe("ConversationPage", () => {
   it("shows the empty state when there are no messages", () => {
     renderPage(conversationPreviews.empty)
 
-    expect(screen.getByRole("heading", { name: "How can I help you today?" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Hi, I'm Sprout. What's on your mind?" })).toBeInTheDocument()
     expect(screen.queryByRole("log")).not.toBeInTheDocument()
   })
 

@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react"
 
+import { cn } from "@/lib/utils"
+
 import type { BotActivity, ChatMessage } from "../types"
 import { MessageItem } from "./message-item"
-import { SparkMark } from "./spark-mark"
+import { SproutFace } from "./sprout-face"
 
 interface MessageListProps {
   messages: ChatMessage[]
@@ -29,7 +31,11 @@ export function MessageList({ messages, botActivity }: MessageListProps) {
         {messages.map((message) => (
           <MessageItem key={message.id} message={message} />
         ))}
-        <SparkMark isAnimated={isBotBusy} className={isBotBusy ? "opacity-100" : "opacity-60"} />
+        <SproutFace
+          activity={botActivity}
+          // Pulls the face up out of the list's 24px message gap so it sits under the last reply.
+          className={cn("-mt-6", isBotBusy ? "opacity-100" : "opacity-70")}
+        />
         <div ref={listEndRef} />
       </div>
     </div>

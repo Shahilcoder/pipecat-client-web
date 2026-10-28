@@ -1,6 +1,6 @@
 # Voice Agent Web Client
 
-A mobile-first, Claude-style dark React client for the `pipecat-voice-agent` backend (Pipecat + LiveKit).
+A mobile-first React client, **Sprout** (a joyful green light theme, see [`DESIGN.md`](DESIGN.md)), for the `pipecat-voice-agent` backend (Pipecat + LiveKit).
 
 ```bash
 npm install
